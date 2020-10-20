@@ -6,7 +6,7 @@ class Navigation extends Component {
   render = () => (
     <Container>
       <Link to="/">Go to Home</Link> <br />
-      <Link to="/article">Go to Article</Link> <br />
+      <Link to="/articleList">Go to Article</Link> <br />
     </Container>
   );
 }

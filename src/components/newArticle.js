@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { Editor, EditorState } from "draft-js";
+//import RichEditor from "./richEditor";
 
 class NewArticle extends Component {
   render() {

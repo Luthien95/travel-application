@@ -10,8 +10,8 @@ const Article = () => <ArticleComponent />;
 const routes = (
   <Switch>
     <Route exact path="/" component={App} />
-    <Route path="/article" component={ArticleList} />
-    <Route path="/article/:1" component={Article} />
+    <Route path="/articleList" component={ArticleList} />
+    <Route path="/article/:id" component={Article} />
     <Route path="/newArticle" component={NewArticle} />
   </Switch>
 );
