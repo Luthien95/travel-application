@@ -1,0 +1,50 @@
+.article
+    margin-bottom: 50px
+    &__image
+        @include objectCover
+        &-container
+            width: 100%
+            height: 300px
+            outline: 1px solid rgba(255, 255, 255, .5)
+            outline-offset: -15px
+    &__header
+        font-family: Montserrat
+        margin-top: 20px
+    &__date
+        text-transform: uppercase
+        font-size: .8rem
+        font-weight: bold
+        margin: 5px 0 20px 0
+    &__description
+        font-family: Roboto
+        font-size: .9rem
+        line-height: 2rem
+        font-weight: 300
+
+.new-article
+    &__shortcut-image
+        padding: 20px
+        border: 1px dashed $border-color
+        margin: 10px 0
+        @include alignCenter
+        flex-direction: column
+    &__icon
+        margin-bottom: 20px
+        font-size: 2rem
+        color: $border-color
+    &__input
+        padding: 20px
+        border: 1px solid $border-color
+        margin: 10px 0
+        width: 100%
+    &__button
+        margin-top: 20px
+        display: flex
+        margin-left: auto
+        padding: 5px 20px
+        margin-bottom: 20px
+        background: $main-color
+        color: white
+        border: none
+        text-transform: uppercase
+        font-size: .9rem
