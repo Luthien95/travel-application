@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Container } from "react-bootstrap";
+import axios from "axios";
 import RichEditor from "./richEditor";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { POST } from "./database/fetch";
 
 class NewArticle extends Component {
   constructor(props) {
@@ -35,19 +35,60 @@ class NewArticle extends Component {
     });
   }
 
+  handleSubmit = async (event) => {
+    /*event.preventDefault();
+    console.log(this.state.newArticle);
+
+    const article = this.state.newArticle;
+
+    axios
+      .post(`/api/articles`, { article })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));*/
+
+    event.preventDefault();
+    const response = await fetch("/api/articles", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(this.state.newArticle),
+    })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+    //const body = await response.text();
+    //this.setState({ responseToPost: body });
+  };
+
   render() {
     return (
       <Container>
         <div className="new-article">
-          <form>
-            <div className="new-article__shortcut-image">
-              <FontAwesomeIcon icon={faPlus} className="new-article__icon" />
-              <p>Place main image here</p>
-            </div>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              className="new-article__input"
+              name="city"
+              placeholder="Type city..."
+              onChange={this.addInputData}
+              required
+            />
+            <input
+              className="new-article__input"
+              name="img"
+              placeholder="Type image url..."
+              onChange={this.addInputData}
+              required
+            />
             <input
               className="new-article__input"
               name="title"
-              placeholder="Type destination name..."
+              placeholder="Type article name..."
               onChange={this.addInputData}
               required
             />
@@ -72,3 +113,11 @@ class NewArticle extends Component {
 }
 
 export default NewArticle;
+
+/*
+<div className="new-article__shortcut-image">
+              <FontAwesomeIcon icon={faPlus} className="new-article__icon" />
+              <p>Place main image here</p>
+            </div>
+
+            */

@@ -8,7 +8,6 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log(req);
   const article = new Article({
     title: req.body.title,
     description: req.body.description,
@@ -16,10 +15,11 @@ router.post("/", async (req, res) => {
     img: req.body.img,
   });
 
-  const article2 = await article.save();
-  res.send(article2);
+  const result = await article.save();
+  res.send(result);
 });
 
+/*
 async function createArticle() {
   const article = new Article({
     title: "Hawaii - Magic place",
@@ -31,8 +31,7 @@ async function createArticle() {
   });
 
   const result = await article.save();
-  console.log(result);
 }
 
-createArticle();
+createArticle();*/
 module.exports = router;

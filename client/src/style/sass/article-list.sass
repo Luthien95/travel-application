@@ -11,24 +11,42 @@
         margin-bottom: 10px
 
 .article-shortcut
-    height: 300px
+    padding: 0
     position: relative
-    margin-bottom: 10px
     &__image
         width: 100%
-        height: 100%
+        height: 200px
         object-fit: cover
-        filter: grayscale(100%)
-    &__header
-        position: absolute
-        bottom: 20px
-        left: 20px
-        font-family: Montserrat
+        transition-duration: 1s
+    &__data
+        padding: 0 20px
+        border: 1px solid $light-border-color
+        border-top: none
+    &__city
+        background: black
+        padding: 5px 20px
+        width: fit-content
         color: white
-        font-size: 1.2rem
-    &__date
-        position: absolute
-        top: 10px
-        right: 15px
-        color: white
+        text-transform: uppercase
         font-size: .8rem
+        margin-left: 20px
+    &__header
+        font-family: Montserrat
+        font-size: 1.2rem
+        margin: 30px 0 0 0 
+    &__date
+        font-size: .7rem
+        opacity: .5
+    &__description
+        margin: 20px 0
+        font-size: .8rem
+        overflow: hidden
+        max-height: 100px
+        transition-duration: 1s
+    &:hover
+        .article-shortcut__image
+            height: 350px
+            transition-duration: 1s
+        .article-shortcut__description
+            max-height: 0px
+            transition-duration: 1s

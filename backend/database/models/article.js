@@ -36,6 +36,5 @@ Article.Schema.methods.toString = function () {
   console.log(this.title);
 };
 */
-//const Article = mongoose.model("Article", articleSchema);
 
 exports.Article = Article;

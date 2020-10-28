@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import "./style/css/style.css";
 
 class App extends React.Component {
@@ -55,19 +55,17 @@ class App extends React.Component {
   }
 }
 
-export default App;
-/*
+export default App;*/
 
 import React from "react";
 import "./style/css/style.css";
 
 function App() {
   return (
-    <div class="app-content">
+    <div className="app-content">
       <h1>App</h1>
     </div>
   );
 }
 
 export default App;
-*/
