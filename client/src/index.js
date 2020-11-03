@@ -11,10 +11,8 @@ import App from "./App";
 const route = (
   <React.Fragment>
     <Router>
-      <div>
-        <Navigation />
-        {routing}
-      </div>
+      <Navigation />
+      {routing}
     </Router>
     <App />
   </React.Fragment>

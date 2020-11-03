@@ -10,6 +10,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const article = new Article({
     title: req.body.title,
+    country: req.body.country,
     description: req.body.description,
     date: req.body.date,
     img: req.body.img,

@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 import ArticleComponent from "./article";
 import ArticleList from "./articleList";
 import NewArticle from "./newArticle";

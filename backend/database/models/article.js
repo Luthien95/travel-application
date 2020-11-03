@@ -10,6 +10,10 @@ const Article = mongoose.model(
       minlength: 5,
       maxlength: 50,
     },
+    country: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,

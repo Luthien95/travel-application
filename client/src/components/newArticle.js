@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Container } from "react-bootstrap";
-import axios from "axios";
 import RichEditor from "./richEditor";
-import { POST } from "./database/fetch";
 
 class NewArticle extends Component {
   constructor(props) {
@@ -22,6 +20,8 @@ class NewArticle extends Component {
       newArticle.description = article;
       return { newArticle };
     });
+
+    console.log(this.state.newArticle);
   };
 
   addInputData(e) {
@@ -73,8 +73,8 @@ class NewArticle extends Component {
           <form onSubmit={this.handleSubmit}>
             <input
               className="new-article__input"
-              name="city"
-              placeholder="Type city..."
+              name="country"
+              placeholder="Type country..."
               onChange={this.addInputData}
               required
             />

@@ -1,7 +1,7 @@
 import React from "react";
 import "./../style/css/style.css";
-import { Container, Row, Col } from "react-bootstrap";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import { Route, Link, Switch } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Article from "./article";
@@ -14,7 +14,10 @@ class ArticleList extends React.Component {
 
     this.state = {
       articleList: null,
+      visibleItems: 2,
     };
+
+    this.loadMoreItems = this.loadMoreItems.bind(this);
   }
 
   componentDidMount = () => {
@@ -25,50 +28,86 @@ class ArticleList extends React.Component {
     });
   };
 
-  render() {
-    const { articleList } = this.state;
+  loadMoreItems() {
+    this.setState((prev) => {
+      return { visibleItems: prev.visibleItems + 6 };
+    });
+  }
 
-    return (
-      <Container className="article-list">
-        <Row>
-          <Col md={4} sm={6} xs={12} className="p-0">
-            <Link to="/newArticle">
-              <div className="article-list__new-window">
-                <FontAwesomeIcon icon={faPlus} />
-                <p>Add new travel registry</p>
-              </div>
-            </Link>
-          </Col>
-          {articleList ? (
-            articleList.map((place2, id) => (
-              <Col md={4} sm={6} xs={12} className="p-0" key={id}>
-                <Link to={`/article/${place2._id}`}>
-                  <ArticleShortcut place={place2} />
-                </Link>
-              </Col>
-            ))
-          ) : (
-            <Loader />
+  render() {
+    const { articleList, visibleItems } = this.state;
+
+    if (articleList) {
+      return (
+        <React.Fragment>
+          <Container className="article-list">
+            <div className="article-list__item">
+              <Link to="/newArticle">
+                <div className="article-list__new-window">
+                  <FontAwesomeIcon icon={faPlus} />
+                  <p>Add new travel registry</p>
+                </div>
+              </Link>
+            </div>
+            {articleList ? (
+              <List
+                articleList={articleList}
+                visibleItems={visibleItems}
+                loadMoreItems={this.loadMoreItems}
+              />
+            ) : (
+              <Loader />
+            )}
+            <Switch>
+              <Route path="/article/:id" component={Article} />
+            </Switch>
+          </Container>
+          {visibleItems < articleList.length && (
+            <button
+              onClick={this.loadMoreItems}
+              type="button"
+              className="load-more"
+            >
+              Load more
+            </button>
           )}
-        </Row>
-        <Switch>
-          <Route path="/article/:id" component={Article} />
-        </Switch>
-      </Container>
-    );
+        </React.Fragment>
+      );
+    } else {
+      return <Loader />;
+    }
   }
 }
 
+const List = ({ articleList, visibleItems }) => {
+  return articleList.slice(0, visibleItems).map((place2, id) => (
+    <div className="article-list__item" key={id}>
+      <Link to={`/article/${place2._id}`}>
+        <ArticleShortcut place={place2} />
+      </Link>
+    </div>
+  ));
+};
+
 const ArticleShortcut = ({ place }) => {
+  const regex = /(<([^>]+)>)/gi;
+  const result = place.description.replace(regex, "");
+
   return (
     <div className="article-shortcut">
-      <img className="article-shortcut__image" src={place.img} />
+      <div className="article-shortcut__image-container">
+        <img
+          className="article-shortcut__image"
+          src={place.img}
+          alt={place.title}
+        />
+      </div>
       <div className="article-shortcut__data">
-        <p className="article-shortcut__city">{place.city}</p>
+        <p className="article-shortcut__city">{place.country}</p>
         <h1 className="article-shortcut__header">{place.title}</h1>
         <p className="article-shortcut__date">{place.date}</p>
         <p className="article-shortcut__description">
-          {place.description.substring(0, 130) + "..."}
+          {result.substring(0, 130) + "..."}
         </p>
       </div>
     </div>

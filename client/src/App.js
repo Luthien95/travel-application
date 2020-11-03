@@ -61,11 +61,7 @@ import React from "react";
 import "./style/css/style.css";
 
 function App() {
-  return (
-    <div className="app-content">
-      <h1>App</h1>
-    </div>
-  );
+  return <div className="app-content"></div>;
 }
 
 export default App;
