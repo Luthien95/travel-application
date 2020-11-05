@@ -20,6 +20,14 @@ router.post("/", async (req, res) => {
   res.send(result);
 });
 
+router.delete("/:id", async (req, res) => {
+  const article = await Article.findByIdAndRemove(req.params.id);
+
+  if (!article) return res.status(404).send("The movie was not found");
+
+  res.send(article);
+});
+
 /*
 async function createArticle() {
   const article = new Article({

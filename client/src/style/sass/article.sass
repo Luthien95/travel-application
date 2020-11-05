@@ -4,9 +4,9 @@
         @include objectCover
         &-container
             width: 100%
-            height: 300px
-            outline: 1px solid rgba(255, 255, 255, .5)
-            outline-offset: -15px
+            height: 350px
+            //outline: 1px solid rgba(255, 255, 255, .5)
+            //outline-offset: -15px
     &__header
         font-family: Montserrat
         margin-top: 20px
@@ -20,6 +20,24 @@
         font-size: .9rem
         line-height: 2rem
         font-weight: 300
+    &__options
+        margin-top: 10px
+        display: flex
+        justify-content: flex-end
+        align-items: baseline
+    &__option-button
+        font-size: .8rem
+        text-transform: uppercase
+    &__button  
+        margin-top: 20px
+        display: block
+        &-icon
+            margin-right: 10px
+            transition-duration: .5s
+        &:hover
+            .article__button-icon
+                margin-right: 20px
+                transition-duration: .5s
 
 .new-article
     &__shortcut-image

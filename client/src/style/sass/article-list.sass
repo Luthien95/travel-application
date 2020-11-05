@@ -14,8 +14,12 @@
             $h: (random(160) + 440) + px
             height: $h
         .article-list__item:nth-child(1)
-            $h: (random(20) + 440) + px
+            $h: (random(20) + 400) + px
             height: $h
+    @include respond-to(md) 
+        grid-template-columns: repeat(auto-fill, minmax(50%, 1fr))
+    @include respond-to(xs) 
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr))
 
 .article-shortcut
     padding: 0
