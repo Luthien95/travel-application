@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import PropTypes from "prop-types";
 
 class Navigation extends React.Component {
   render = () => {

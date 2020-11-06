@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import parse from "html-react-parser";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretLeft } from "@fortawesome/free-solid-svg-icons";
@@ -13,29 +13,28 @@ function Article() {
   const [articleList, setArticleList] = useState();
   const [currentPlace, setCurrentPlace] = useState();
   let { id } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
-    getData();
-  }, []);
+    const getData = async () => {
+      axios.get(URL).then((response) => {
+        setArticleList(response.data);
 
-  const getData = async () => {
-    //const response = await axios.get(URL);
-    //setArticleList(response.data);
-
-    axios.get(URL).then((response) => {
-      setArticleList(response.data);
-
-      response.data.map((article) => {
-        return article._id === id ? setCurrentPlace(article) : null;
+        response.data.map((article) => {
+          return article._id === id ? setCurrentPlace(article) : null;
+        });
       });
-    });
-  };
+    };
+    getData();
+  }, [id]);
 
   const removeArticle = (articleId) => {
     axios.delete(`/api/articles/${articleId}`).then((res) => {
       const del = articleList.filter((article) => articleId !== article._id);
       setArticleList(del);
     });
+
+    history.push("/articleList");
   };
 
   return currentPlace ? (

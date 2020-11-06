@@ -20,8 +20,6 @@ class NewArticle extends Component {
       newArticle.description = article;
       return { newArticle };
     });
-
-    console.log(this.state.newArticle);
   };
 
   addInputData(e) {

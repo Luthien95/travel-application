@@ -20,10 +20,27 @@ router.post("/", async (req, res) => {
   res.send(result);
 });
 
+router.put("/:id", async (req, res) => {
+  const article = await Article.findByIdAndUpdate(
+    req.params.id,
+    {
+      title: req.body.title,
+      country: req.body.country,
+      description: req.body.description,
+      date: req.body.date,
+      img: req.body.img,
+    },
+    { new: true }
+  );
+
+  if (!article) return res.status(404).send("The article was not found");
+
+  res.send(article);
+});
+
 router.delete("/:id", async (req, res) => {
   const article = await Article.findByIdAndRemove(req.params.id);
-
-  if (!article) return res.status(404).send("The movie was not found");
+  if (!article) return res.status(404).send("The article was not found");
 
   res.send(article);
 });
