@@ -39,7 +39,7 @@ class ArticleList extends React.Component {
 
     if (articleList) {
       return (
-        <React.Fragment>
+        <>
           <Container className="article-list">
             <div className="article-list__item">
               <Link to="/newArticle">
@@ -71,7 +71,7 @@ class ArticleList extends React.Component {
               Load more
             </button>
           )}
-        </React.Fragment>
+        </>
       );
     } else {
       return <Loader />;

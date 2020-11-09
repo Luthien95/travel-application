@@ -61,7 +61,7 @@ import React from "react";
 import "./style/css/style.css";
 
 function App() {
-  return <div className="app-content"></div>;
+  return null;
 }
 
 export default App;

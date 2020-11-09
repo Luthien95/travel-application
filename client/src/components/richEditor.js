@@ -1,5 +1,11 @@
 import React from "react";
-import { Editor, EditorState, RichUtils, getDefaultKeyBinding } from "draft-js";
+import {
+  Editor,
+  EditorState,
+  RichUtils,
+  getDefaultKeyBinding,
+  ContentState,
+} from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 class RichEditor extends React.Component {
@@ -57,6 +63,14 @@ class RichEditor extends React.Component {
     let html = stateToHTML(contentState);
 
     this.props.addRichEditorText(html);
+  }
+
+  clearEditorState() {
+    const editorState = EditorState.push(
+      this.state.editorState,
+      ContentState.createFromText("")
+    );
+    this.setState({ editorState });
   }
 
   render() {
