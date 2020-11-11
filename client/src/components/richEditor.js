@@ -5,6 +5,7 @@ import {
   RichUtils,
   getDefaultKeyBinding,
   ContentState,
+  convertFromHTML,
 } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
@@ -73,6 +74,16 @@ class RichEditor extends React.Component {
     this.setState({ editorState });
   }
 
+  changeEditorState(currentEditedPlace) {
+    const c = EditorState.createWithContent(
+      ContentState.createFromBlockArray(convertFromHTML(currentEditedPlace))
+    );
+
+    this.setState({ editorState: c });
+
+    console.log(c);
+  }
+
   render() {
     const { editorState } = this.state;
 
@@ -87,6 +98,13 @@ class RichEditor extends React.Component {
     }
 
     //let html = stateToHTML(contentState);
+
+    const c = EditorState.createWithContent(
+      ContentState.createFromBlockArray(
+        convertFromHTML("<p>My initial content.</p>")
+      )
+    );
+    console.log(c);
 
     return (
       <div className="RichEditor-root">

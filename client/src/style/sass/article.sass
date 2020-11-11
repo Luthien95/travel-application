@@ -50,11 +50,31 @@
         margin-bottom: 20px
         font-size: 2rem
         color: $border-color
+    &__label
+        position: absolute
+        left: 20px
+        width: 100%
+        top: 50%
+        transform: translateY(-50%)
+        color: #aaa
+        transition: 0.3s
+        z-index: -1
+        letter-spacing: 0.5px
     &__input
         padding: 20px
         border: 1px solid $border-color
         margin: 10px 0
         width: 100%
+        background: none
+        &:focus ~ label
+            top: 10px;
+            background: white
+            color: #000000
+            transition: 0.3s
+            z-index: 1
+            width: auto
+            padding: 0 10px
+            font-size: .8rem
     &__button
         margin-top: 20px
         display: flex

@@ -1,7 +1,12 @@
 {
   "postSuccessAddAlert": {
     "heading": "Hey, it's all done!",
-    "text": "Your post have been added. You can see it in your <a href=\"/articleList\">article list</a>. Keep posting!",
+    "text": "Your post has been added. You can see it in your <a href=\"/articleList\">article list</a>. Keep posting!",
+    "variant": "success"
+  },
+  "postSuccessEditAlert": {
+    "heading": "Hey, it's all done!",
+    "text": "Your post has been changed. You can see the changes <a href=\"/articleList\">here</a>.",
     "variant": "success"
   }
 }

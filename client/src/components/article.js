@@ -6,12 +6,14 @@ import { Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretLeft } from "@fortawesome/free-solid-svg-icons";
 import Loader from "./loader";
+import NewArticle from "./newArticle";
 
 const URL = "/api/articles";
 
 function Article() {
   const [articleList, setArticleList] = useState();
   const [currentPlace, setCurrentPlace] = useState();
+  const [isEditModeActive, setEditMode] = useState(false);
   let { id } = useParams();
   const history = useHistory();
 
@@ -37,7 +39,28 @@ function Article() {
     history.push("/articleList");
   };
 
+  const editArticle = (currentPlace) => {
+    console.log(currentPlace);
+    setEditMode(true);
+  };
+
   return currentPlace ? (
+    isEditModeActive ? (
+      <NewArticle currentPlace={currentPlace} />
+    ) : (
+      <ArticlePreview
+        currentPlace={currentPlace}
+        removeArticle={removeArticle}
+        editArticle={editArticle}
+      />
+    )
+  ) : (
+    <Loader />
+  );
+}
+
+const ArticlePreview = ({ currentPlace, removeArticle, editArticle }) => {
+  return (
     <Container>
       <div className="article">
         <div className="article__image-container">
@@ -59,7 +82,13 @@ function Article() {
           >
             Delete post
           </button>{" "}
-          | <button className="article__option-button">Edit post</button>
+          |{" "}
+          <button
+            className="article__option-button"
+            onClick={() => editArticle(currentPlace)}
+          >
+            Edit post
+          </button>
         </div>
         <a className="article__button" href="/articleList">
           <FontAwesomeIcon
@@ -70,9 +99,7 @@ function Article() {
         </a>
       </div>
     </Container>
-  ) : (
-    <Loader />
   );
-}
+};
 
 export default Article;
