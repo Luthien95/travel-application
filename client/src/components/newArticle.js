@@ -3,6 +3,8 @@ import { Container, Col } from "react-bootstrap";
 import alertMessages from "../data/alertMessages";
 import RichEditor from "./richEditor";
 import MessageBox from "./messageBox";
+import InputField from "./article/inputField";
+import { useHistory } from "react-router-dom";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
 class NewArticle extends Component {
@@ -47,21 +49,9 @@ class NewArticle extends Component {
   }
 
   submitNewArticle = async (event) => {
-    /*event.preventDefault();
-    console.log(this.state.newArticle);
-
-    const article = this.state.newArticle;
-
-    axios
-      .post(`/api/articles`, { article })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));*/
-
     event.preventDefault();
-    const response = await fetch("/api/articles", {
+
+    await fetch("/api/articles", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,6 +63,28 @@ class NewArticle extends Component {
         this.clearInputFields();
       })
       .catch((err) => console.log(err));
+  };
+
+  saveChangedArticle = async (event) => {
+    event.preventDefault();
+
+    const { newArticle } = this.state;
+    const editedArticle = this.state.editedCurrentPlace;
+
+    Object.entries(newArticle).map(([key, value]) => {
+      editedArticle[key] = value;
+    });
+
+    fetch(`/api/articles/${this.state.editedCurrentPlace._id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedArticle),
+    }).then((res) => {
+      this.showAlertBox();
+    });
   };
 
   showAlertBox = () => {
@@ -94,11 +106,11 @@ class NewArticle extends Component {
       <EditArticle
         visible={this.state.visible}
         alertMessage={alertMessages.postSuccessEditAlert}
-        submitNewArticle={this.submitNewArticle}
         addInputData={this.addInputData}
         addRichEditorText={this.addRichEditorText}
         richEditor={this.richEditor}
         editedCurrentPlace={this.state.editedCurrentPlace}
+        saveChangedArticle={this.saveChangedArticle}
       />
     ) : (
       <CreateArticle
@@ -166,18 +178,20 @@ const CreateArticle = ({
 const EditArticle = ({
   visible,
   alertMessage,
-  submitNewArticle,
   addInputData,
   addRichEditorText,
   richEditor,
   editedCurrentPlace,
+  saveChangedArticle,
 }) => {
+  const history = useHistory();
+
   return (
     <>
       <MessageBox visible={visible} message={alertMessage} />
       <Container>
         <div className="new-article">
-          <form onSubmit={submitNewArticle} id="article-form">
+          <form onSubmit={saveChangedArticle} id="article-form">
             <EditInputField
               inputName="country"
               placeholderText="Type country..."
@@ -207,7 +221,14 @@ const EditArticle = ({
               ref={richEditor}
               editorState={editedCurrentPlace.description}
             />
-            <button>Cancel</button> |
+            <button
+              onClick={() => {
+                history.goBack();
+              }}
+            >
+              Cancel
+            </button>{" "}
+            |
             <input
               className="new-article__button"
               type="submit"
@@ -217,21 +238,6 @@ const EditArticle = ({
         </div>
       </Container>
     </>
-  );
-};
-
-const InputField = ({ inputName, placeholderText, addInputData }) => {
-  return (
-    <Col md={12} className="p-0">
-      <input
-        className="new-article__input"
-        name={inputName}
-        placeholder=""
-        onChange={addInputData}
-        required
-      />
-      <label className="new-article__label">{placeholderText}</label>
-    </Col>
   );
 };
 
@@ -262,3 +268,48 @@ export default NewArticle;
             </div>
 
             */
+
+/*event.preventDefault();
+    console.log(this.state.newArticle);
+
+    const article = this.state.newArticle;
+
+    axios
+      .post(`/api/articles`, { article })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));*/
+
+/*
+const InputField = ({ inputName, placeholderText, addInputData }) => {
+  let inputClassName = "new-article__label";
+
+  const disableInputLabel = (e) => {
+    const inputValue = e.target.value;
+
+    inputClassName = inputValue
+      ? "new-article__label new-article__label--hidden"
+      : "new-article__label";
+
+    console.log(inputValue, inputClassName);
+
+    return inputClassName;
+  };
+
+  return (
+    <Col md={12} className="p-0">
+      <input
+        className="new-article__input"
+        name={inputName}
+        placeholder=""
+        onChange={addInputData}
+        onMouseOut={disableInputLabel}
+        required
+      />
+      <label className={inputClassName}>{placeholderText}</label>
+    </Col>
+  );
+};
+*/

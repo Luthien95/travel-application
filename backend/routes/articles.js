@@ -7,6 +7,11 @@ router.get("/", async (req, res) => {
   res.send(articles);
 });
 
+router.get("/:id", async (req, res) => {
+  const articles = await Article.findById(req.params.id);
+  res.send(articles);
+});
+
 router.post("/", async (req, res) => {
   const article = new Article({
     title: req.body.title,
@@ -33,7 +38,7 @@ router.put("/:id", async (req, res) => {
     { new: true }
   );
 
-  if (!article) return res.status(404).send("The article was not found");
+  //if (!article) return res.status(404).send("The article was not found");
 
   res.send(article);
 });

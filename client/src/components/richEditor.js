@@ -80,8 +80,6 @@ class RichEditor extends React.Component {
     );
 
     this.setState({ editorState: c });
-
-    console.log(c);
   }
 
   render() {
@@ -104,7 +102,6 @@ class RichEditor extends React.Component {
         convertFromHTML("<p>My initial content.</p>")
       )
     );
-    console.log(c);
 
     return (
       <div className="RichEditor-root">
