@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import { Container, Col } from "react-bootstrap";
 import alertMessages from "../data/alertMessages";
-import RichEditor from "./richEditor";
-import MessageBox from "./messageBox";
-import InputField from "./article/inputField";
-import { useHistory } from "react-router-dom";
-import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
+import ArticleForm from "./article/articleForm";
+//import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
 class NewArticle extends Component {
   constructor(props) {
@@ -48,7 +44,7 @@ class NewArticle extends Component {
     });
   }
 
-  submitNewArticle = async (event) => {
+  submitArticle = async (event) => {
     event.preventDefault();
 
     await fetch("/api/articles", {
@@ -103,20 +99,20 @@ class NewArticle extends Component {
 
   render() {
     return this.state.editedCurrentPlace ? (
-      <EditArticle
+      <ArticleForm
         visible={this.state.visible}
         alertMessage={alertMessages.postSuccessEditAlert}
+        submitArticle={this.saveChangedArticle}
         addInputData={this.addInputData}
         addRichEditorText={this.addRichEditorText}
         richEditor={this.richEditor}
         editedCurrentPlace={this.state.editedCurrentPlace}
-        saveChangedArticle={this.saveChangedArticle}
       />
     ) : (
-      <CreateArticle
+      <ArticleForm
         visible={this.state.visible}
         alertMessage={alertMessages.postSuccessAddAlert}
-        submitNewArticle={this.submitNewArticle}
+        submitArticle={this.submitArticle}
         addInputData={this.addInputData}
         addRichEditorText={this.addRichEditorText}
         richEditor={this.richEditor}
@@ -125,10 +121,34 @@ class NewArticle extends Component {
   }
 }
 
+export default NewArticle;
+
+/*
+<div className="new-article__shortcut-image">
+              <FontAwesomeIcon icon={faPlus} className="new-article__icon" />
+              <p>Place main image here</p>
+            </div>
+
+            */
+
+/*event.preventDefault();
+    console.log(this.state.newArticle);
+
+    const article = this.state.newArticle;
+
+    axios
+      .post(`/api/articles`, { article })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));*/
+
+/*
 const CreateArticle = ({
   visible,
   alertMessage,
-  submitNewArticle,
+  submitArticle,
   addInputData,
   addRichEditorText,
   richEditor,
@@ -138,7 +158,7 @@ const CreateArticle = ({
       <MessageBox visible={visible} message={alertMessage} />
       <Container>
         <div className="new-article">
-          <form onSubmit={submitNewArticle} id="article-form">
+          <form onSubmit={submitArticle} id="article-form">
             <InputField
               inputName="country"
               placeholderText="Type country..."
@@ -192,25 +212,25 @@ const EditArticle = ({
       <Container>
         <div className="new-article">
           <form onSubmit={saveChangedArticle} id="article-form">
-            <EditInputField
+            <InputField
               inputName="country"
               placeholderText="Type country..."
               defaultValue={editedCurrentPlace.country}
               addInputData={addInputData}
             />
-            <EditInputField
+            <InputField
               inputName="img"
               placeholderText="Type image url..."
               defaultValue={editedCurrentPlace.img}
               addInputData={addInputData}
             />
-            <EditInputField
+            <InputField
               inputName="title"
               placeholderText="Type article name..."
               defaultValue={editedCurrentPlace.title}
               addInputData={addInputData}
             />
-            <EditInputField
+            <InputField
               inputName="date"
               placeholderText="Type destination time..."
               defaultValue={editedCurrentPlace.date}
@@ -238,78 +258,6 @@ const EditArticle = ({
         </div>
       </Container>
     </>
-  );
-};
-
-const EditInputField = ({
-  inputName,
-  placeholderText,
-  defaultValue,
-  addInputData,
-}) => {
-  return (
-    <input
-      className="new-article__input"
-      name={inputName}
-      placeholder={placeholderText}
-      defaultValue={defaultValue}
-      onChange={addInputData}
-      required
-    />
-  );
-};
-
-export default NewArticle;
-
-/*
-<div className="new-article__shortcut-image">
-              <FontAwesomeIcon icon={faPlus} className="new-article__icon" />
-              <p>Place main image here</p>
-            </div>
-
-            */
-
-/*event.preventDefault();
-    console.log(this.state.newArticle);
-
-    const article = this.state.newArticle;
-
-    axios
-      .post(`/api/articles`, { article })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));*/
-
-/*
-const InputField = ({ inputName, placeholderText, addInputData }) => {
-  let inputClassName = "new-article__label";
-
-  const disableInputLabel = (e) => {
-    const inputValue = e.target.value;
-
-    inputClassName = inputValue
-      ? "new-article__label new-article__label--hidden"
-      : "new-article__label";
-
-    console.log(inputValue, inputClassName);
-
-    return inputClassName;
-  };
-
-  return (
-    <Col md={12} className="p-0">
-      <input
-        className="new-article__input"
-        name={inputName}
-        placeholder=""
-        onChange={addInputData}
-        onMouseOut={disableInputLabel}
-        required
-      />
-      <label className={inputClassName}>{placeholderText}</label>
-    </Col>
   );
 };
 */

@@ -12,22 +12,24 @@ class InputField extends React.Component {
     this.disableInputLabel = this.disableInputLabel.bind(this);
   }
 
-  disableInputLabel = (e) => {
-    const inputValue = e.target.value;
-
-    if (inputValue.length > 0) {
+  componentDidMount() {
+    if (this.props.defaultValue) {
       this.setState({
         isInputValue: true,
       });
-    } else {
-      this.setState({
-        isInputValue: false,
-      });
     }
+  }
+
+  disableInputLabel = (e) => {
+    const inputValue = e.target.value;
+
+    this.setState({
+      isInputValue: inputValue.length > 0 ? true : false,
+    });
   };
 
   render() {
-    let { inputName, placeholderText, addInputData } = this.props;
+    let { inputName, placeholderText, defaultValue, addInputData } = this.props;
     let isInputValue = this.state.isInputValue;
 
     return (
@@ -38,6 +40,7 @@ class InputField extends React.Component {
           placeholder=""
           onChange={addInputData}
           onBlur={this.disableInputLabel}
+          defaultValue={defaultValue ? defaultValue : null}
           required
         />
         {isInputValue == true ? null : (
