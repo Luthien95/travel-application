@@ -43,7 +43,7 @@ class InputField extends React.Component {
           defaultValue={defaultValue ? defaultValue : null}
           required
         />
-        {isInputValue == true ? null : (
+        {isInputValue === true ? null : (
           <label className="new-article__label">{placeholderText}</label>
         )}
       </Col>

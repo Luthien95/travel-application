@@ -5,6 +5,12 @@
   100% {
     opacity: 0; } }
 
+@keyframes fadeInText {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
 h1,
 p {
   margin: 0; }
@@ -35,6 +41,13 @@ input:focus, input:active,
   animation-delay: 4s; }
   .alert a {
     color: #02b4bd; }
+
+.error-text {
+  font-size: .7rem;
+  color: red;
+  font-weight: 500;
+  margin: 10px 0;
+  animation: fadeInText .5s; }
 
 .navigation {
   margin: 40px auto;
@@ -243,3 +256,20 @@ input:focus, input:active,
       font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
       font-size: 16px;
       padding: 20px; }
+
+.form__container {
+  display: flex;
+  flex-direction: column; }
+
+.form__label {
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  font-size: .7rem;
+  letter-spacing: 1px;
+  color: #bdb8b8 s; }
+
+.form__input {
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #f5f4f4;
+  border: none; }

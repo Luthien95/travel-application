@@ -21,6 +21,21 @@ class Navigation extends React.Component {
         >
           Articles
         </NavLink>{" "}
+        <NavLink
+          exact
+          to="/"
+          className="navigation__item"
+          activeClassName="navigation__item--active"
+        >
+          Explore
+        </NavLink>{" "}
+        <NavLink
+          to="/register"
+          className="navigation__item"
+          activeClassName="navigation__item--active"
+        >
+          Register
+        </NavLink>{" "}
       </Container>
     );
   };

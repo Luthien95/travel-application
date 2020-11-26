@@ -95,14 +95,6 @@ class RichEditor extends React.Component {
       }
     }
 
-    //let html = stateToHTML(contentState);
-
-    const c = EditorState.createWithContent(
-      ContentState.createFromBlockArray(
-        convertFromHTML("<p>My initial content.</p>")
-      )
-    );
-
     return (
       <div className="RichEditor-root">
         <div className="RichEditor-controls">

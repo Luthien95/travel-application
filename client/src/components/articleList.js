@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Article from "./article";
 import Loader from "./loader";
-import Masonry from "react-responsive-masonry";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import axios from "axios";
 
 class ArticleList extends React.Component {
@@ -73,47 +73,38 @@ class ArticleList extends React.Component {
 }
 
 const List = ({ articleList, visibleItems }) => {
-  const breakpointColumnsObj = {
-    default: 4,
-    1100: 3,
-    700: 2,
-    500: 1,
-  };
-
   let min = 450;
   let max = 600;
 
   let articleHeight = min + Math.random() * (max - min) + "px";
 
   return (
-    <Masonry
-      breakpointCols={breakpointColumnsObj}
-      className="my-masonry-grid"
-      columnClassName="my-masonry-grid_column"
-    >
-      <div className="article-list__item" style={{ height: articleHeight }}>
-        <Link to="/newArticle">
-          <div className="article-list__new-window">
-            <FontAwesomeIcon icon={faPlus} />
-            <p>Add new travel registry</p>
-          </div>
-        </Link>
-      </div>
-      {articleList.slice(0, visibleItems).map((place2, id) => {
-        articleHeight = min + Math.random() * (max - min) + "px";
-        return (
-          <div
-            className="article-list__item"
-            key={id}
-            style={{ height: articleHeight }}
-          >
-            <Link to={`/article/${place2._id}`}>
-              <ArticleShortcut place={place2} />
-            </Link>
-          </div>
-        );
-      })}
-    </Masonry>
+    <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+      <Masonry>
+        <div className="article-list__item" style={{ height: articleHeight }}>
+          <Link to="/newArticle">
+            <div className="article-list__new-window">
+              <FontAwesomeIcon icon={faPlus} />
+              <p>Add new travel registry</p>
+            </div>
+          </Link>
+        </div>
+        {articleList.slice(0, visibleItems).map((place2, id) => {
+          articleHeight = min + Math.random() * (max - min) + "px";
+          return (
+            <div
+              className="article-list__item"
+              key={id}
+              style={{ height: articleHeight }}
+            >
+              <Link to={`/article/${place2._id}`}>
+                <ArticleShortcut place={place2} />
+              </Link>
+            </div>
+          );
+        })}
+      </Masonry>
+    </ResponsiveMasonry>
   );
 };
 

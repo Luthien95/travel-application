@@ -8,5 +8,10 @@
     "heading": "Hey, it's all done!",
     "text": "Your post has been changed. You can see the changes <a href=\"/articleList\">here</a>.",
     "variant": "success"
+  },
+  "postSuccessRegisterAlert": {
+    "heading": "You have successfully registered to the application.",
+    "text": "Thank you and go to <a href=\"/login\">login page</a>.",
+    "variant": "success"
   }
 }

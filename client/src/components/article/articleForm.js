@@ -7,7 +7,7 @@ import RichEditor from "./../richEditor";
 
 class ArticleForm extends React.Component {
   render() {
-    let {
+    const {
       visible,
       alertMessage,
       submitArticle,
@@ -15,7 +15,6 @@ class ArticleForm extends React.Component {
       addRichEditorText,
       richEditor,
       editedCurrentPlace,
-      saveChangedArticle,
     } = this.props;
     return (
       <>

@@ -6,7 +6,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 import Navigation from "./components/navigation";
 import routing from "./components/routing";
-import App from "./App";
 
 const route = (
   <React.Fragment>
@@ -14,7 +13,6 @@ const route = (
       <Navigation />
       {routing}
     </Router>
-    <App />
   </React.Fragment>
 );
 
