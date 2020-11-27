@@ -13,5 +13,17 @@
     "heading": "You have successfully registered to the application.",
     "text": "Thank you and go to <a href=\"/login\">login page</a>.",
     "variant": "success"
+  },
+  "differentPasswordsMessage": {
+    "text": "The entered passwords do not match."
+  },
+  "wrongNumberOfLettersInUsernameMessage": {
+    "text": "Wrong number of letters. Your nickname should have at least 5 and no more than 50 characters."
+  },
+  "wrongNumberOfLettersInPasswordMessage": {
+    "text": "Wrong number of letters. Your password should have at least 8 characters."
+  },
+  "notAllInputFiledMessage": {
+    "text": "You need to fill all input boxes."
   }
 }

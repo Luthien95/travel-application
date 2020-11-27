@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-
-const differentPasswordsMessage = {
-  message: "The entered passwords do not match.",
-};
+import { filterRegisterForm } from "./registerValidation";
 
 class Register extends Component {
   constructor(props) {
@@ -10,8 +7,6 @@ class Register extends Component {
 
     this.state = {
       newUser: {},
-      differentPasswordsError: false,
-      errorMessage: null,
       errorMessages: [],
     };
 
@@ -35,18 +30,19 @@ class Register extends Component {
     const { newUser } = this.state;
     let newUserObject = null;
 
-    if (newUser.password === newUser.repeatPassword) {
-      newUserObject = {
-        name: newUser.name,
-        password: newUser.password,
-      };
-    } else {
-      this.setState((prevState) => ({
-        errorMessages: [...prevState.errorMessages, differentPasswordsMessage],
-      }));
+    const arrayOfErrors = filterRegisterForm(newUser);
 
+    if (arrayOfErrors.length > 0) {
+      this.setState({
+        errorMessages: arrayOfErrors,
+      });
       return;
     }
+
+    newUserObject = {
+      name: newUser.name,
+      password: newUser.password,
+    };
 
     await fetch("/api/users/signup", {
       method: "POST",
@@ -55,28 +51,18 @@ class Register extends Component {
       },
       body: JSON.stringify(newUserObject),
     })
+      .then((res) => res.json())
       .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
+        this.setState((prevState) => ({
+          errorMessages: [...prevState.errorMessages, response],
+        }));
       })
-      .then((data) => {
-        if (data) {
-          console.log(data.message);
-
-          const b = data;
-          this.setState((prevState) => ({
-            errorMessages: [...prevState.errorMessages, b],
-          }));
-        } else {
-          console.log("No error i think....");
-        }
-      })
-      .catch((err) => console.error("3" + err));
+      .catch((err) => {
+        console.log(err.response.data);
+      });
   };
 
   render() {
-    console.log(this.state.errorMessages);
     return (
       <>
         <form>
@@ -126,12 +112,6 @@ class Register extends Component {
               onBlur={() => this.setState({ differentPasswordsError: false })}
               required
             />
-            {this.state.differentPasswordsError ? (
-              <p className="error-text">{differentPasswordsMessage}</p>
-            ) : null}
-            {this.state.errorMessage ? (
-              <p className="error-text">{this.state.errorMessage}</p>
-            ) : null}
             <ErrorMessages errorMessages={this.state.errorMessages} />
             <button type="submit" onClick={this.submitNewUser}>
               Register
@@ -150,7 +130,7 @@ const ErrorMessages = ({ errorMessages }) => {
         {errorMessages.map((error, id) => {
           return (
             <p className="error-text" key={id}>
-              {error.message}
+              {error.text}
             </p>
           );
         })}

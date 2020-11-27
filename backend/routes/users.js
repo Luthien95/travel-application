@@ -15,7 +15,7 @@ router.post("/signup", async (req, res) => {
 
   User.findOne({ name: req.body.name }, function (err, user) {
     if (user) {
-      res.status(400).send({ message: "This username is already taken." });
+      res.status(400).json({ text: "This username is already taken." });
       return;
     }
   });
