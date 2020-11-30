@@ -25,5 +25,8 @@
   },
   "notAllInputFiledMessage": {
     "text": "You need to fill all input boxes."
+  },
+  "spaceInStringMessage": {
+    "text": "Not username nor password should contain space character."
   }
 }

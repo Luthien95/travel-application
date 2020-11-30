@@ -6,6 +6,37 @@ import InputField from "./inputField";
 import RichEditor from "./../richEditor";
 
 class ArticleForm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      todayDate: null,
+      minDate: null,
+    };
+
+    this.changeDate = this.changeDate.bind(this);
+  }
+
+  componentDidMount() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = yyyy + "-" + mm + "-" + dd;
+    this.setState({
+      todayDate: today,
+    });
+  }
+
+  changeDate = (e) => {
+    this.props.addInputData(e);
+
+    this.setState({
+      minDate: e.target.value,
+    });
+  };
+
   render() {
     const {
       visible,
@@ -16,6 +47,9 @@ class ArticleForm extends React.Component {
       richEditor,
       editedCurrentPlace,
     } = this.props;
+
+    const { todayDate, minDate } = this.state;
+
     return (
       <>
         <MessageBox visible={visible} message={alertMessage} />
@@ -46,14 +80,29 @@ class ArticleForm extends React.Component {
                   editedCurrentPlace ? editedCurrentPlace.title : null
                 }
               />
-              <InputField
-                inputName="date"
-                placeholderText="Type destination time..."
-                addInputData={addInputData}
+              <label for="start">Start date:</label>
+
+              <input
+                type="date"
+                name="startDate"
                 defaultValue={
-                  editedCurrentPlace ? editedCurrentPlace.date : null
+                  editedCurrentPlace ? editedCurrentPlace.startDate : todayDate
                 }
-              />
+                max={todayDate}
+                onChange={this.changeDate}
+              ></input>
+              <label for="start">End date:</label>
+
+              <input
+                type="date"
+                name="endDate"
+                defaultValue={
+                  editedCurrentPlace ? editedCurrentPlace.endDate : todayDate
+                }
+                min={minDate ? minDate : null}
+                max={todayDate}
+                onChange={addInputData}
+              ></input>
               <RichEditor
                 addRichEditorText={addRichEditorText}
                 ref={richEditor}

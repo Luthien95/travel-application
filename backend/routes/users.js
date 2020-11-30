@@ -21,7 +21,7 @@ router.post("/signup", async (req, res) => {
   });
 
   const result = await user.save();
-  res.send(result);
+  res.send(true);
 });
 
 module.exports = router;

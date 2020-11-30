@@ -19,12 +19,13 @@ const Article = mongoose.model(
       required: true,
       trim: true,
     },
-    date: {
+    startDate: {
       type: String,
       required: true,
-      trim: true,
-      minlength: 5,
-      maxlength: 50,
+    },
+    endDate: {
+      type: String,
+      required: true,
     },
     img: {
       type: String,

@@ -98,6 +98,7 @@ class NewArticle extends Component {
   };
 
   render() {
+    console.log(this.state.newArticle);
     return this.state.editedCurrentPlace ? (
       <ArticleForm
         visible={this.state.visible}

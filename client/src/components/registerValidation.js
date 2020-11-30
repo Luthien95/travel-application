@@ -41,6 +41,18 @@ export const filterRegisterForm = (newUser) => {
         alertMessages.wrongNumberOfLettersInPasswordMessage
       );
     }
+
+    if (
+      newUser.name.includes(" ") ||
+      newUser.password.includes(" ") ||
+      newUser.repeatPassword.includes(" ")
+    ) {
+      filteredMessages = filteredMessages.filter(
+        (error) => error.text !== alertMessages.spaceInStringMessage.text
+      );
+
+      filteredMessages.push(alertMessages.spaceInStringMessage);
+    }
   }
 
   return filteredMessages;

@@ -53,9 +53,13 @@ class Register extends Component {
     })
       .then((res) => res.json())
       .then((response) => {
-        this.setState((prevState) => ({
-          errorMessages: [...prevState.errorMessages, response],
-        }));
+        if (response) {
+          this.setState((prevState) => ({
+            errorMessages: [...prevState.errorMessages, response],
+          }));
+        }
+
+        if (response === true) this.props.history.push("/login");
       })
       .catch((err) => {
         console.log(err.response.data);

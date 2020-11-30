@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretLeft } from "@fortawesome/free-solid-svg-icons";
 import Loader from "./loader";
 import NewArticle from "./newArticle";
+import { dateFormat } from "./dateFormat";
 
 const URL = "/api/articles";
 
@@ -71,7 +72,9 @@ const ArticlePreview = ({ currentPlace, removeArticle, editArticle }) => {
           />
         </div>
         <h1 className="article__header">{currentPlace.title}</h1>
-        <p className="article__date">{currentPlace.date}</p>
+        <p className="article__date">
+          {dateFormat(currentPlace.startDate, currentPlace.endDate)}
+        </p>
         <div className="article__description">
           {parse(currentPlace.description)}
         </div>

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Article from "./article";
 import Loader from "./loader";
+import { dateFormat } from "./dateFormat";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import axios from "axios";
 
@@ -124,7 +125,9 @@ const ArticleShortcut = ({ place }) => {
       <div className="article-shortcut__data">
         <p className="article-shortcut__city">{place.country}</p>
         <h1 className="article-shortcut__header">{place.title}</h1>
-        <p className="article-shortcut__date">{place.date}</p>
+        <p className="article-shortcut__date">
+          {dateFormat(place.startDate, place.endDate)}
+        </p>
         <p className="article-shortcut__description">
           {result.substring(0, 130) + "..."}
         </p>

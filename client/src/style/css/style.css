@@ -46,7 +46,7 @@ input:focus, input:active,
   font-size: .7rem;
   color: red;
   font-weight: 500;
-  margin: 10px 0;
+  margin: 5px 0;
   animation: fadeInText .5s; }
 
 .navigation {

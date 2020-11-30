@@ -3,7 +3,7 @@ const router = express();
 const { Article } = require("./../database/models/article");
 
 router.get("/", async (req, res) => {
-  const articles = await Article.find().sort("title");
+  const articles = await Article.find().sort([["startDate", -1]]);
   res.send(articles);
 });
 
@@ -17,7 +17,8 @@ router.post("/", async (req, res) => {
     title: req.body.title,
     country: req.body.country,
     description: req.body.description,
-    date: req.body.date,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate,
     img: req.body.img,
   });
 
@@ -32,7 +33,8 @@ router.put("/:id", async (req, res) => {
       title: req.body.title,
       country: req.body.country,
       description: req.body.description,
-      date: req.body.date,
+      startDate: req.body.startDate,
+      endDate: req.body.endDate,
       img: req.body.img,
     },
     { new: true }
