@@ -1,4 +1,4 @@
-import alertMessages from "../data/alertMessages";
+import alertMessages from "../../data/alertMessages";
 
 export const filterLoginForm = (user) => {
   let filteredMessages = [];

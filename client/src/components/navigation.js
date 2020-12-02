@@ -22,8 +22,7 @@ class Navigation extends React.Component {
           Articles
         </NavLink>{" "}
         <NavLink
-          exact
-          to="/"
+          to="/exploreArticles"
           className="navigation__item"
           activeClassName="navigation__item--active"
         >

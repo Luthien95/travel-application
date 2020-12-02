@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import alertMessages from "../data/alertMessages";
 import ArticleForm from "./article/articleForm";
-import { getTodayDate } from "./mixedFunctions";
+import { addDefaultValues } from "./newArticleUtility";
 //import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
 class NewArticle extends Component {
@@ -16,7 +16,6 @@ class NewArticle extends Component {
 
     this.addRichEditorText = this.addRichEditorText.bind(this);
     this.addInputData = this.addInputData.bind(this);
-    this.addDefaultValues = this.addDefaultValues.bind(this);
     this.richEditor = React.createRef();
   }
 
@@ -26,7 +25,9 @@ class NewArticle extends Component {
       this.richEditor.current.changeEditorState(currentPlace.description);
     }
 
-    this.addDefaultValues();
+    this.setState({
+      newArticle: addDefaultValues(),
+    });
   }
 
   addRichEditorText = (article) => {
@@ -47,35 +48,6 @@ class NewArticle extends Component {
       newArticle[newPropertyName] = newPropetyValue;
       return { newArticle };
     });
-  }
-
-  addDefaultValues() {
-    if (!this.state.newArticle.isPublic) {
-      this.setState((prevState) => ({
-        newArticle: {
-          ...prevState.newArticle,
-          isPublic: false,
-        },
-      }));
-    }
-
-    if (!this.state.newArticle.startDate) {
-      this.setState((prevState) => ({
-        newArticle: {
-          ...prevState.newArticle,
-          startDate: getTodayDate(),
-        },
-      }));
-    }
-
-    if (!this.state.newArticle.endDate) {
-      this.setState((prevState) => ({
-        newArticle: {
-          ...prevState.newArticle,
-          endDate: getTodayDate(),
-        },
-      }));
-    }
   }
 
   submitArticle = async (event) => {
@@ -132,7 +104,6 @@ class NewArticle extends Component {
   };
 
   render() {
-    console.log(this.state.newArticle);
     return this.state.editedCurrentPlace ? (
       <ArticleForm
         visible={this.state.visible}
@@ -151,7 +122,6 @@ class NewArticle extends Component {
         addInputData={this.addInputData}
         addRichEditorText={this.addRichEditorText}
         richEditor={this.richEditor}
-        isPublic={this.state.newArticle.isPublic}
       />
     );
   }

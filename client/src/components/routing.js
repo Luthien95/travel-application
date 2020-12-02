@@ -4,8 +4,9 @@ import ArticleComponent from "./article";
 import ArticleList from "./articleList";
 import NewArticle from "./newArticle";
 import Homepage from "./homepage";
-import Login from "./login";
-import Register from "./register";
+import Login from "./authorization/login";
+import Register from "./authorization/register";
+import ExploreArticles from "./exploreArticles";
 
 const App = () => <Homepage />;
 const Article = () => <ArticleComponent />;
@@ -16,6 +17,7 @@ const routes = (
     <Route path="/articleList" component={ArticleList} />
     <Route path="/article/:id" component={Article} />
     <Route path="/newArticle" component={NewArticle} />
+    <Route path="/exploreArticles" component={ExploreArticles} />
     <Route path="/register" component={Register} />
     <Route path="/login" component={Login} />
   </Switch>
