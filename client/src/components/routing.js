@@ -17,6 +17,7 @@ const routes = (
     <Route path="/article/:id" component={Article} />
     <Route path="/newArticle" component={NewArticle} />
     <Route path="/register" component={Register} />
+    <Route path="/login" component={Login} />
   </Switch>
 );
 

@@ -22,11 +22,35 @@ class Login extends Component {
     });
   }
 
+  logIn = async (event) => {
+    event.preventDefault();
+
+    await fetch("/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(this.state.user),
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        if (response) {
+          this.setState((prevState) => ({
+            errorMessages: [...prevState.errorMessages, response],
+          }));
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
   render() {
+    console.log(this.state.user);
     return (
       <>
         <p>Login</p>
-        <form action="action_page.php" method="post">
+        <form>
           <div className="imgcontainer">
             <img src="img_avatar2.png" alt="Avatar" className="avatar" />
           </div>
@@ -56,7 +80,9 @@ class Login extends Component {
             <label>
               <input type="checkbox" name="remember" /> Remember me
             </label>
-            <button type="submit">Login</button>
+            <button type="submit" onClick={this.logIn}>
+              Login
+            </button>
           </div>
 
           <div className="container">

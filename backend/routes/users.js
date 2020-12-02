@@ -24,4 +24,37 @@ router.post("/signup", async (req, res) => {
   res.send(true);
 });
 
+router.post("/login", function (req, res) {
+  const { name, password } = req.body;
+
+  User.findOne({ name: req.body.name, password: req.body.password }, function (
+    err,
+    user
+  ) {
+    if (user) {
+      res.redirect("/");
+      res.send(true);
+    } else {
+      res.status(400).json({ text: "Login failed" });
+      return;
+    }
+  });
+  /*
+  if (user) {
+    //const authToken = generateAuthToken();
+
+    // Store authentication token
+    // authTokens[authToken] = user;
+
+    // Setting the auth token in cookies
+    //res.cookie("AuthToken", authToken);
+
+    // Redirect user to the protected page
+    res.redirect("/articleList");
+  } else {
+    res.status(400).json({ text: "Login failed" });
+    return;
+  }*/
+});
+
 module.exports = router;

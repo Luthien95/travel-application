@@ -27,6 +27,10 @@ const Article = mongoose.model(
       type: String,
       required: true,
     },
+    isPublic: {
+      type: Boolean,
+      required: true,
+    },
     img: {
       type: String,
       required: true,

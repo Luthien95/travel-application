@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import MessageBox from "./../messageBox";
 import InputField from "./inputField";
 import RichEditor from "./../richEditor";
+import { getTodayDate } from ".././mixedFunctions.js";
 
 class ArticleForm extends React.Component {
   constructor(props) {
@@ -12,21 +13,23 @@ class ArticleForm extends React.Component {
     this.state = {
       todayDate: null,
       minDate: null,
+      isArticlePublic: false,
     };
 
     this.changeDate = this.changeDate.bind(this);
+    this.updateCheckbox = this.updateCheckbox.bind(this);
   }
 
   componentDidMount() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    var yyyy = today.getFullYear();
-
-    today = yyyy + "-" + mm + "-" + dd;
     this.setState({
-      todayDate: today,
+      todayDate: getTodayDate(),
     });
+
+    if (this.props.editedCurrentPlace) {
+      this.setState({
+        isArticlePublic: this.props.editedCurrentPlace.isPublic,
+      });
+    }
   }
 
   changeDate = (e) => {
@@ -35,6 +38,14 @@ class ArticleForm extends React.Component {
     this.setState({
       minDate: e.target.value,
     });
+  };
+
+  updateCheckbox = (e) => {
+    this.setState((prevState) => ({
+      isArticlePublic: !prevState.isArticlePublic,
+    }));
+
+    this.props.addInputData(e);
   };
 
   render() {
@@ -46,6 +57,7 @@ class ArticleForm extends React.Component {
       addRichEditorText,
       richEditor,
       editedCurrentPlace,
+      isPublic,
     } = this.props;
 
     const { todayDate, minDate } = this.state;
@@ -80,7 +92,7 @@ class ArticleForm extends React.Component {
                   editedCurrentPlace ? editedCurrentPlace.title : null
                 }
               />
-              <label for="start">Start date:</label>
+              <label htmlFor="start">Start date:</label>
 
               <input
                 type="date"
@@ -91,7 +103,7 @@ class ArticleForm extends React.Component {
                 max={todayDate}
                 onChange={this.changeDate}
               ></input>
-              <label for="start">End date:</label>
+              <label htmlFor="start">End date:</label>
 
               <input
                 type="date"
@@ -103,6 +115,13 @@ class ArticleForm extends React.Component {
                 max={todayDate}
                 onChange={addInputData}
               ></input>
+              <input
+                type="checkbox"
+                name="isPublic"
+                checked={this.state.isArticlePublic}
+                onChange={this.updateCheckbox}
+              />
+              <label htmlFor="isPublic">Public article</label>
               <RichEditor
                 addRichEditorText={addRichEditorText}
                 ref={richEditor}
