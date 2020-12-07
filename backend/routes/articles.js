@@ -20,6 +20,7 @@ router.post("/", async (req, res) => {
     startDate: req.body.startDate,
     endDate: req.body.endDate,
     isPublic: req.body.isPublic,
+    userId: req.body.userId,
     img: req.body.img,
   });
 
@@ -37,6 +38,7 @@ router.put("/:id", async (req, res) => {
       startDate: req.body.startDate,
       endDate: req.body.endDate,
       isPublic: req.body.isPublic,
+      userId: req.body.userId,
       img: req.body.img,
     },
     { new: true }

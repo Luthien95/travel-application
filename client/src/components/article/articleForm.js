@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import MessageBox from "./../messageBox";
 import InputField from "./inputField";
-import RichEditor from "./../richEditor";
+import RichEditor from "./richEditor";
 import { getTodayDate } from ".././mixedFunctions.js";
 
 class ArticleForm extends React.Component {

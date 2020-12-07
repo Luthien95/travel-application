@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import Cookie from "js-cookie";
+import ErrorMessages from "./errorMessages";
+import { filterLoginForm } from "./loginUtilitiy";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
@@ -6,6 +10,8 @@ class Login extends Component {
 
     this.state = {
       user: {},
+      errorMessages: [],
+      redirect: null,
     };
 
     this.addInputData = this.addInputData.bind(this);
@@ -25,6 +31,15 @@ class Login extends Component {
   logIn = async (event) => {
     event.preventDefault();
 
+    const arrayOfErrors = filterLoginForm(this.state.user);
+
+    if (arrayOfErrors.length > 0) {
+      this.setState({
+        errorMessages: arrayOfErrors,
+      });
+      return;
+    }
+
     await fetch("/api/users/login", {
       method: "POST",
       headers: {
@@ -34,27 +49,39 @@ class Login extends Component {
     })
       .then((res) => res.json())
       .then((response) => {
-        if (response) {
-          this.setState((prevState) => ({
-            errorMessages: [...prevState.errorMessages, response],
-          }));
+        // console.log(response.headers["x-auth-token"]);
+        if (response.token) {
+          Cookie.set("token", response.token);
+
+          this.setState({
+            redirect: "/articleList",
+          });
+        } else {
+          if (response) {
+            this.setState((prevState) => ({
+              errorMessages: [...prevState.errorMessages, response],
+            }));
+          }
         }
       })
       .catch((err) => {
-        console.log(err.response);
+        console.log(err);
       });
   };
 
   render() {
+    const token = Cookie.get("token") ? Cookie.get("token") : null;
+    console.log(token);
     console.log(this.state.user);
+
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />;
+    }
+
     return (
       <>
         <p>Login</p>
         <form>
-          <div className="imgcontainer">
-            <img src="img_avatar2.png" alt="Avatar" className="avatar" />
-          </div>
-
           <div className="container">
             <label htmlFor="name">
               <b>Username</b>
@@ -80,6 +107,7 @@ class Login extends Component {
             <label>
               <input type="checkbox" name="remember" /> Remember me
             </label>
+            <ErrorMessages errorMessages={this.state.errorMessages} />
             <button type="submit" onClick={this.logIn}>
               Login
             </button>

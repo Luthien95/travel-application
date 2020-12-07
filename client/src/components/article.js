@@ -11,8 +11,8 @@ function Article() {
   const [articleList, setArticleList] = useState();
   const [currentPlace, setCurrentPlace] = useState();
   const [isEditModeActive, setEditMode] = useState(false);
-  let { id } = useParams();
   const history = useHistory();
+  let { id } = useParams();
 
   useEffect(() => {
     const getData = async () => {

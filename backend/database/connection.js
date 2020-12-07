@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 mongoose.connect("mongodb://localhost/travelApplication", {
   useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 
 const db = mongoose.connection;

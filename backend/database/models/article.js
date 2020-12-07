@@ -31,6 +31,10 @@ const Article = mongoose.model(
       type: Boolean,
       required: true,
     },
+    userId: {
+      type: String,
+      required: true,
+    },
     img: {
       type: String,
       required: true,

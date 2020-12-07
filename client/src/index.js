@@ -4,8 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./style/css/style.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
-import Navigation from "./components/navigation";
-import routing from "./components/routing";
+import Navigation from "./components/navigation/navigation";
+import routing from "./components/navigation/routing";
 
 const route = (
   <React.Fragment>

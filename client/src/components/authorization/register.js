@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { filterRegisterForm } from "./registerValidation";
+import { filterRegisterForm } from "./registerUtility";
+import ErrorMessages from "./errorMessages";
 
 class Register extends Component {
   constructor(props) {
@@ -126,23 +127,5 @@ class Register extends Component {
     );
   }
 }
-
-const ErrorMessages = ({ errorMessages }) => {
-  if (errorMessages.length > 0) {
-    return (
-      <>
-        {errorMessages.map((error, id) => {
-          return (
-            <p className="error-text" key={id}>
-              {error.text}
-            </p>
-          );
-        })}
-      </>
-    );
-  }
-
-  return null;
-};
 
 export default Register;

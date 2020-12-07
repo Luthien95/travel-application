@@ -216,7 +216,8 @@ input:focus, input:active,
     font-size: .8rem;
     overflow: hidden;
     max-height: 100px;
-    transition-duration: 1s; }
+    transition-duration: 1s;
+    color: #5d5b5b; }
   .article-shortcut:hover .article-shortcut__image {
     transition-duration: 1s; }
   .article-shortcut:hover .article-shortcut__description {

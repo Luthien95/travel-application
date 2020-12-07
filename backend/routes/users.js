@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express();
+const _ = require("lodash");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 const { User } = require("./../database/models/user");
 
 router.get("/", async (req, res) => {
@@ -27,34 +30,26 @@ router.post("/signup", async (req, res) => {
 router.post("/login", function (req, res) {
   const { name, password } = req.body;
 
-  User.findOne({ name: req.body.name, password: req.body.password }, function (
-    err,
-    user
-  ) {
+  User.findOne({ name: name, password: password }, function (err, user) {
     if (user) {
-      res.redirect("/");
-      res.send(true);
+      // res.redirect("/");
+      const token = jwt.sign({ _id: user._id }, config.get("jwtPrivateKey"));
+      //res.send(token);
+      /*res
+        .header("x-auth-token", token)
+        .send(_.pick(user, ["_id", "name", "password"]));*/
+      //res.send(token);
+
+      res.json({
+        token,
+      });
     } else {
-      res.status(400).json({ text: "Login failed" });
+      res.status(400).json({ text: "Wrong username or password." });
       return;
     }
   });
-  /*
-  if (user) {
-    //const authToken = generateAuthToken();
-
-    // Store authentication token
-    // authTokens[authToken] = user;
-
-    // Setting the auth token in cookies
-    //res.cookie("AuthToken", authToken);
-
-    // Redirect user to the protected page
-    res.redirect("/articleList");
-  } else {
-    res.status(400).json({ text: "Login failed" });
-    return;
-  }*/
 });
 
 module.exports = router;
+
+// set travel-application_jwtPrivateKey=mySecureKey
