@@ -74,7 +74,8 @@ class NewArticle extends Component {
     const editedArticle = this.state.editedCurrentPlace;
 
     Object.entries(newArticle).map(([key, value]) => {
-      editedArticle[key] = value;
+      return (editedArticle[key] = value);
+      //editedArticle[key] = value;
     });
 
     fetch(`/api/articles/${this.state.editedCurrentPlace._id}`, {
@@ -104,7 +105,7 @@ class NewArticle extends Component {
   };
 
   render() {
-    return this.state.editedCurrentPlace ? (
+    /*return this.state.editedCurrentPlace ? (
       <ArticleForm
         visible={this.state.visible}
         alertMessage={alertMessages.postSuccessEditAlert}
@@ -122,6 +123,23 @@ class NewArticle extends Component {
         addInputData={this.addInputData}
         addRichEditorText={this.addRichEditorText}
         richEditor={this.richEditor}
+      />
+    );*/
+    return (
+      <ArticleForm
+        visible={this.state.visible}
+        alertMessage={alertMessages.postSuccessEditAlert}
+        submitArticle={
+          this.state.editedArticle
+            ? this.saveChangedArticle
+            : this.submitArticle
+        }
+        addInputData={this.addInputData}
+        addRichEditorText={this.addRichEditorText}
+        richEditor={this.richEditor}
+        editedCurrentPlace={
+          this.state.editedCurrentPlace ? this.state.editedCurrentPlace : null
+        }
       />
     );
   }

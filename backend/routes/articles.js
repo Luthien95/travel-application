@@ -2,15 +2,37 @@ const express = require("express");
 const router = express();
 const { Article } = require("./../database/models/article");
 
-router.get("/", async (req, res) => {
+/*router.get("/", async (req, res) => {
   const articles = await Article.find().sort([["startDate", -1]]);
+
+  console.log(req.body);
   res.send(articles);
-});
+});*/
 
 router.get("/:id", async (req, res) => {
   const articles = await Article.findById(req.params.id);
   res.send(articles);
 });
+
+router.get("/", async (req, res) => {
+  const articles = await Article.find({ userId: req.query.userId }).sort([
+    ["startDate", -1],
+  ]);
+
+  res.send(articles);
+});
+
+/*
+
+router.get("/", async (req, res) => {
+  const articles = await Article.find({ isPublic: true }).sort([
+    ["startDate", -1],
+  ]);
+
+  res.send(articles);
+});
+
+*/
 
 router.post("/", async (req, res) => {
   const article = new Article({

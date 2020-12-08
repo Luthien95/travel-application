@@ -14,8 +14,6 @@ function Navigation() {
     history.push("/login");
   };
 
-  // console.log(Cookie.get("token"));
-
   return (
     <Container className="navigation">
       {token ? (
@@ -52,9 +50,9 @@ const LoggedInUserNavigation = ({ removeCookie }) => {
       >
         Articles
       </NavLink>
-      <a className="navigation__item" onClick={removeCookie}>
+      <button className="navigation__item" onClick={removeCookie}>
         Logout
-      </a>
+      </button>
     </>
   );
 };

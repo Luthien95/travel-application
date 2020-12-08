@@ -49,7 +49,6 @@ class Login extends Component {
     })
       .then((res) => res.json())
       .then((response) => {
-        // console.log(response.headers["x-auth-token"]);
         if (response.token) {
           Cookie.set("token", response.token);
 
@@ -70,10 +69,6 @@ class Login extends Component {
   };
 
   render() {
-    const token = Cookie.get("token") ? Cookie.get("token") : null;
-    console.log(token);
-    console.log(this.state.user);
-
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />;
     }
@@ -115,7 +110,7 @@ class Login extends Component {
 
           <div className="container">
             <span className="psw">
-              Forgot <a href="#">password?</a>
+              Forgot <a href="/">password?</a>
             </span>
           </div>
         </form>

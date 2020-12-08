@@ -1,5 +1,6 @@
 import { getTodayDate } from "./mixedFunctions";
 import Cookie from "js-cookie";
+
 var jwt = require("jsonwebtoken");
 
 export const addDefaultValues = () => {
@@ -13,8 +14,6 @@ export const addDefaultValues = () => {
     endDate: getTodayDate(),
     userId: userId,
   };
-
-  console.log(defaultValues);
 
   return defaultValues;
 };

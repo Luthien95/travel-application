@@ -14,7 +14,7 @@ class ExploreArticles extends React.Component {
 
     this.state = {
       articleList: null,
-      visibleItems: 5,
+      visibleItems: 6,
     };
 
     this.loadMoreItems = this.loadMoreItems.bind(this);
