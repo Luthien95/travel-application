@@ -2,25 +2,13 @@ import React from "react";
 import Cookie from "js-cookie";
 import { NavLink } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 
 function Navigation() {
-  let history = useHistory();
   const token = Cookie.get("token");
-
-  const removeCookie = () => {
-    Cookie.remove("token", { path: "" });
-    // console.log(Cookie.get("token"));
-    history.push("/login");
-  };
 
   return (
     <Container className="navigation">
-      {token ? (
-        <LoggedInUserNavigation removeCookie={removeCookie} />
-      ) : (
-        <NotLoggedInUserNavigation />
-      )}
+      {token ? <LoggedInUserNavigation /> : <NotLoggedInUserNavigation />}
       <NavLink
         to="/exploreArticles"
         className="navigation__item"
@@ -32,7 +20,7 @@ function Navigation() {
   );
 }
 
-const LoggedInUserNavigation = ({ removeCookie }) => {
+const LoggedInUserNavigation = () => {
   return (
     <>
       <NavLink
@@ -50,9 +38,6 @@ const LoggedInUserNavigation = ({ removeCookie }) => {
       >
         Articles
       </NavLink>
-      <button className="navigation__item" onClick={removeCookie}>
-        Logout
-      </button>
     </>
   );
 };

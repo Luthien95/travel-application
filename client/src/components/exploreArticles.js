@@ -22,13 +22,10 @@ class ExploreArticles extends React.Component {
 
   componentDidMount = () => {
     axios
-      .get("/api/articles")
+      .get("/api/articles/publicPosts")
       .then((response) => {
-        const list = response.data.filter(
-          (article) => article.isPublic === true
-        );
         this.setState({
-          articleList: list,
+          articleList: response.data,
         });
       })
       .catch((error) => console.log(error));

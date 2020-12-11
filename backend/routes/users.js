@@ -32,16 +32,11 @@ router.post("/login", function (req, res) {
 
   User.findOne({ name: name, password: password }, function (err, user) {
     if (user) {
-      // res.redirect("/");
       const token = jwt.sign({ _id: user._id }, config.get("jwtPrivateKey"));
-      //res.send(token);
-      /*res
-        .header("x-auth-token", token)
-        .send(_.pick(user, ["_id", "name", "password"]));*/
-      //res.send(token);
 
       res.json({
         token,
+        name,
       });
     } else {
       res.status(400).json({ text: "Wrong username or password." });
@@ -53,3 +48,10 @@ router.post("/login", function (req, res) {
 module.exports = router;
 
 // set travel-application_jwtPrivateKey=mySecureKey
+
+/*
+
+
+      /*res
+        .header("x-auth-token", token)
+        .send(_.pick(user, ["_id", "name", "password"]));*/

@@ -9,9 +9,6 @@ import Loader from "./loader";
 import ArticleShortcut from "./articleShortcut";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import axios from "axios";
-import Cookie from "js-cookie";
-
-var jwt = require("jsonwebtoken");
 
 class ArticleList extends React.Component {
   constructor(props) {
@@ -26,21 +23,11 @@ class ArticleList extends React.Component {
   }
 
   componentDidMount = () => {
-    const token = Cookie.get("token");
-    const decode = jwt.decode(token);
-    const userId = decode._id;
-
-    axios
-      .get("/api/articles", {
-        params: {
-          userId: userId,
-        },
-      })
-      .then((response) => {
-        this.setState({
-          articleList: response.data,
-        });
+    axios.get("/api/articles/userPosts").then((response) => {
+      this.setState({
+        articleList: response.data,
       });
+    });
   };
 
   loadMoreItems() {

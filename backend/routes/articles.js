@@ -2,29 +2,21 @@ const express = require("express");
 const router = express();
 const { Article } = require("./../database/models/article");
 
-/*router.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
   const articles = await Article.find().sort([["startDate", -1]]);
 
-  console.log(req.body);
-  res.send(articles);
-});*/
-
-router.get("/:id", async (req, res) => {
-  const articles = await Article.findById(req.params.id);
   res.send(articles);
 });
 
-router.get("/", async (req, res) => {
-  const articles = await Article.find({ userId: req.query.userId }).sort([
+router.get("/userPosts", async (req, res) => {
+  const articles = await Article.find({ userId: req.userId }).sort([
     ["startDate", -1],
   ]);
 
   res.send(articles);
 });
 
-/*
-
-router.get("/", async (req, res) => {
+router.get("/publicPosts", async (req, res) => {
   const articles = await Article.find({ isPublic: true }).sort([
     ["startDate", -1],
   ]);
@@ -32,7 +24,10 @@ router.get("/", async (req, res) => {
   res.send(articles);
 });
 
-*/
+router.get("/:id", async (req, res) => {
+  const articles = await Article.findById(req.params.id);
+  res.send(articles);
+});
 
 router.post("/", async (req, res) => {
   const article = new Article({
@@ -42,7 +37,7 @@ router.post("/", async (req, res) => {
     startDate: req.body.startDate,
     endDate: req.body.endDate,
     isPublic: req.body.isPublic,
-    userId: req.body.userId,
+    userId: req.userId,
     img: req.body.img,
   });
 
@@ -60,13 +55,11 @@ router.put("/:id", async (req, res) => {
       startDate: req.body.startDate,
       endDate: req.body.endDate,
       isPublic: req.body.isPublic,
-      userId: req.body.userId,
+      userId: req.userId,
       img: req.body.img,
     },
     { new: true }
   );
-
-  //if (!article) return res.status(404).send("The article was not found");
 
   res.send(article);
 });
@@ -78,7 +71,13 @@ router.delete("/:id", async (req, res) => {
   res.send(article);
 });
 
+module.exports = router;
+
 /*
+
+  //if (!article) return res.status(404).send("The article was not found");
+
+  
 async function createArticle() {
   const article = new Article({
     title: "Hawaii - Magic place",
@@ -93,4 +92,3 @@ async function createArticle() {
 }
 
 createArticle();*/
-module.exports = router;

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { filterRegisterForm } from "./registerUtility";
 import ErrorMessages from "./errorMessages";
+import axios from "axios";
 
 class Register extends Component {
   constructor(props) {
@@ -45,13 +46,29 @@ class Register extends Component {
       password: newUser.password,
     };
 
-    await fetch("/api/users/signup", {
+    /*await fetch("/api/users/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newUserObject),
     })
+      .then((res) => res.json())
+      .then((response) => {
+        if (response) {
+          this.setState((prevState) => ({
+            errorMessages: [...prevState.errorMessages, response],
+          }));
+        }
+
+        if (response === true) this.props.history.push("/login");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });*/
+
+    axios
+      .post(`/api/users/signup`, newUserObject)
       .then((res) => res.json())
       .then((response) => {
         if (response) {

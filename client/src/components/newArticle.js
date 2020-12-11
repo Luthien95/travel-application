@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import alertMessages from "../data/alertMessages";
 import ArticleForm from "./article/articleForm";
 import { addDefaultValues } from "./newArticleUtility";
+import axios from "axios";
 //import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
 class NewArticle extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
@@ -20,14 +23,33 @@ class NewArticle extends Component {
   }
 
   componentDidMount() {
+    let currentArticle = {};
+    this._isMounted = true;
+
     if (this.props.currentPlace) {
       const currentPlace = this.props.currentPlace;
       this.richEditor.current.changeEditorState(currentPlace.description);
+
+      Object.entries(currentPlace).map(([key, value]) => {
+        return (currentArticle[key] = value);
+      });
+    } else {
+      const defaultProps = addDefaultValues();
+
+      Object.entries(defaultProps).map(([key, value]) => {
+        return (currentArticle[key] = value);
+      });
     }
 
-    this.setState({
-      newArticle: addDefaultValues(),
-    });
+    if (this._isMounted) {
+      this.setState({
+        newArticle: currentArticle,
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   addRichEditorText = (article) => {
@@ -53,13 +75,8 @@ class NewArticle extends Component {
   submitArticle = async (event) => {
     event.preventDefault();
 
-    await fetch("/api/articles", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(this.state.newArticle),
-    })
+    axios
+      .post(`/api/articles`, this.state.newArticle)
       .then((res) => {
         this.showAlertBox();
         this.clearInputFields();
@@ -78,16 +95,11 @@ class NewArticle extends Component {
       //editedArticle[key] = value;
     });
 
-    fetch(`/api/articles/${this.state.editedCurrentPlace._id}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(editedArticle),
-    }).then((res) => {
-      this.showAlertBox();
-    });
+    axios
+      .put(`/api/articles/${this.state.editedCurrentPlace._id}`, editedArticle)
+      .then((res) => {
+        this.showAlertBox();
+      });
   };
 
   showAlertBox = () => {
@@ -105,6 +117,34 @@ class NewArticle extends Component {
   };
 
   render() {
+    return (
+      <ArticleForm
+        visible={this.state.visible}
+        alertMessage={
+          this.state.editedCurrentPlace
+            ? alertMessages.postSuccessEditAlert
+            : alertMessages.postSuccessAddAlert
+        }
+        submitArticle={
+          this.state.editedCurrentPlace
+            ? this.saveChangedArticle
+            : this.submitArticle
+        }
+        addInputData={this.addInputData}
+        addRichEditorText={this.addRichEditorText}
+        richEditor={this.richEditor}
+        editedCurrentPlace={
+          this.state.editedCurrentPlace ? this.state.editedCurrentPlace : null
+        }
+      />
+    );
+  }
+}
+
+export default NewArticle;
+
+/*
+
     /*return this.state.editedCurrentPlace ? (
       <ArticleForm
         visible={this.state.visible}
@@ -124,30 +164,9 @@ class NewArticle extends Component {
         addRichEditorText={this.addRichEditorText}
         richEditor={this.richEditor}
       />
-    );*/
-    return (
-      <ArticleForm
-        visible={this.state.visible}
-        alertMessage={alertMessages.postSuccessEditAlert}
-        submitArticle={
-          this.state.editedArticle
-            ? this.saveChangedArticle
-            : this.submitArticle
-        }
-        addInputData={this.addInputData}
-        addRichEditorText={this.addRichEditorText}
-        richEditor={this.richEditor}
-        editedCurrentPlace={
-          this.state.editedCurrentPlace ? this.state.editedCurrentPlace : null
-        }
-      />
     );
-  }
-}
 
-export default NewArticle;
 
-/*
 <div className="new-article__shortcut-image">
               <FontAwesomeIcon icon={faPlus} className="new-article__icon" />
               <p>Place main image here</p>

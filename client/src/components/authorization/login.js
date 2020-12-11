@@ -3,6 +3,7 @@ import Cookie from "js-cookie";
 import ErrorMessages from "./errorMessages";
 import { filterLoginForm } from "./loginUtilitiy";
 import { Redirect } from "react-router-dom";
+import axios from "axios";
 
 class Login extends Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class Login extends Component {
       return;
     }
 
+    /*
     await fetch("/api/users/login", {
       method: "POST",
       headers: {
@@ -51,6 +53,31 @@ class Login extends Component {
       .then((response) => {
         if (response.token) {
           Cookie.set("token", response.token);
+          Cookie.set("username", response.name);
+
+          this.setState({
+            redirect: "/articleList",
+          });
+        } else {
+          if (response) {
+            this.setState((prevState) => ({
+              errorMessages: [...prevState.errorMessages, response],
+            }));
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });*/
+
+    axios
+      .post(`/api/users/login`, this.state.user)
+      .then((response) => {
+        const data = response.data;
+
+        if (data.token) {
+          Cookie.set("token", data.token);
+          Cookie.set("username", data.name);
 
           this.setState({
             redirect: "/articleList",

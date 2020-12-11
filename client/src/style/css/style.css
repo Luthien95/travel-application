@@ -74,6 +74,16 @@ input:focus, input:active,
         height: 7px;
         background: black; }
 
+.header {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #2a2a2a;
+  color: white; }
+  .header__icon {
+    margin-right: 10px; }
+
 .article {
   margin-bottom: 50px; }
   .article__image {
