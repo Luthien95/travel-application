@@ -5,6 +5,7 @@ export const addDefaultValues = () => {
     isPublic: false,
     startDate: getTodayDate(),
     endDate: getTodayDate(),
+    likes: 0,
   };
 
   return defaultValues;

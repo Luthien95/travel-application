@@ -58,7 +58,6 @@ class ArticleForm extends React.Component {
       richEditor,
       editedCurrentPlace,
     } = this.props;
-
     const { todayDate, minDate } = this.state;
 
     return (

@@ -86,61 +86,62 @@ class Register extends Component {
 
   render() {
     return (
-      <>
-        <form>
-          <div className="container form__container">
-            <label htmlFor="name" className="form__label">
-              <b>Username</b>
-            </label>
-            <input
-              type="text"
-              placeholder="Enter Username"
-              name="name"
-              className="form__input"
-              onChange={this.addInputData}
-              required
-            />
-            <label htmlFor="password" className="form__label">
-              <b>Password</b>
-            </label>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              name="password"
-              className="form__input"
-              onChange={this.addInputData}
-              style={{
-                border: this.state.differentPasswordsError
-                  ? "1px solid #c10000"
-                  : "none",
-              }}
-              onBlur={() => this.setState({ differentPasswordsError: false })}
-              required
-            />{" "}
-            <label htmlFor="repeatPassword" className="form__label">
-              <b>Repeat password</b>
-            </label>
-            <input
-              type="password"
-              placeholder="Repeat Password"
-              name="repeatPassword"
-              className="form__input"
-              onChange={this.addInputData}
-              style={{
-                border: this.state.differentPasswordsError
-                  ? "1px solid #c10000"
-                  : "none",
-              }}
-              onBlur={() => this.setState({ differentPasswordsError: false })}
-              required
-            />
-            <ErrorMessages errorMessages={this.state.errorMessages} />
-            <button type="submit" onClick={this.submitNewUser}>
-              Register
-            </button>
-          </div>
-        </form>
-      </>
+      <form>
+        <div className="container form__container">
+          <label htmlFor="name" className="form__label">
+            <b>Username</b>
+          </label>
+          <input
+            type="text"
+            placeholder="Enter Username"
+            name="name"
+            autoComplete="username"
+            className="form__input"
+            onChange={this.addInputData}
+            required
+          />
+          <label htmlFor="password" className="form__label">
+            <b>Password</b>
+          </label>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            name="password"
+            autoComplete="current-password"
+            className="form__input"
+            onChange={this.addInputData}
+            style={{
+              border: this.state.differentPasswordsError
+                ? "1px solid #c10000"
+                : "none",
+            }}
+            onBlur={() => this.setState({ differentPasswordsError: false })}
+            required
+          />{" "}
+          <label htmlFor="repeatPassword" className="form__label">
+            <b>Repeat password</b>
+          </label>
+          <input
+            type="password"
+            placeholder="Repeat Password"
+            name="repeatPassword"
+            autoComplete="current-password"
+            className="form__input"
+            onChange={this.addInputData}
+            style={{
+              border: this.state.differentPasswordsError
+                ? "1px solid #c10000"
+                : "none",
+            }}
+            onBlur={() => this.setState({ differentPasswordsError: false })}
+            required
+          />
+          <ErrorMessages errorMessages={this.state.errorMessages} />
+          <button type="submit" onClick={this.submitNewUser}>
+            Register
+          </button>
+        </div>
+      </form>
     );
   }
 }

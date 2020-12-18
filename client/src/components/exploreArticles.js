@@ -2,10 +2,10 @@ import React from "react";
 import "./../style/css/style.css";
 import { Container } from "react-bootstrap";
 import { Route, Link, Switch } from "react-router-dom";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Article from "./article";
 import Loader from "./loader";
 import ArticleShortcut from "./articleShortcut";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import axios from "axios";
 
 class ExploreArticles extends React.Component {
@@ -54,7 +54,11 @@ class ExploreArticles extends React.Component {
               <Loader />
             )}
             <Switch>
-              <Route path="/article/:id" component={Article} />
+              <Route
+                path="/articles/:id"
+                component={Article}
+                isEditable={false}
+              />
             </Switch>
           </Container>
           {visibleItems < articleList.length && (
@@ -91,7 +95,14 @@ const List = ({ articleList, visibleItems }) => {
               key={id}
               style={{ height: articleHeight }}
             >
-              <Link to={`/article/${place2._id}`}>
+              <Link
+                to={{
+                  pathname: `/article/${place2._id}`,
+                  state: {
+                    isEditable: false,
+                  },
+                }}
+              >
                 <ArticleShortcut place={place2} />
               </Link>
             </div>

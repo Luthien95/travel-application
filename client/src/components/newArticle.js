@@ -92,13 +92,14 @@ class NewArticle extends Component {
 
     Object.entries(newArticle).map(([key, value]) => {
       return (editedArticle[key] = value);
-      //editedArticle[key] = value;
     });
 
     axios
       .put(`/api/articles/${this.state.editedCurrentPlace._id}`, editedArticle)
       .then((res) => {
         this.showAlertBox();
+
+        this.props.goBackToPreview();
       });
   };
 

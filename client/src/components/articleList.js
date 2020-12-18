@@ -1,13 +1,13 @@
 import React from "react";
-import "./../style/css/style.css";
 import { Container } from "react-bootstrap";
 import { Route, Link, Switch } from "react-router-dom";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Article from "./article";
 import Loader from "./loader";
 import ArticleShortcut from "./articleShortcut";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import "./../style/css/style.css";
 import axios from "axios";
 
 class ArticleList extends React.Component {
@@ -53,7 +53,11 @@ class ArticleList extends React.Component {
               <Loader />
             )}
             <Switch>
-              <Route path="/article/:id" component={Article} />
+              <Route
+                path="/article/:id"
+                component={Article}
+                isEditable={false}
+              />
             </Switch>
           </Container>
           {visibleItems < articleList.length && (
@@ -98,7 +102,14 @@ const List = ({ articleList, visibleItems }) => {
               key={id}
               style={{ height: articleHeight }}
             >
-              <Link to={`/article/${place2._id}`}>
+              <Link
+                to={{
+                  pathname: `/article/${place2._id}`,
+                  state: {
+                    isEditable: true,
+                  },
+                }}
+              >
                 <ArticleShortcut place={place2} />
               </Link>
             </div>

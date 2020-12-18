@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Cookie from "js-cookie";
 import ErrorMessages from "./errorMessages";
-import { filterLoginForm } from "./loginUtilitiy";
+import { filterLoginForm } from "./loginUtility";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 
@@ -101,47 +101,46 @@ class Login extends Component {
     }
 
     return (
-      <>
-        <p>Login</p>
-        <form>
-          <div className="container">
-            <label htmlFor="name">
-              <b>Username</b>
-            </label>
-            <input
-              type="text"
-              placeholder="Enter Username"
-              name="name"
-              onChange={this.addInputData}
-              required
-            />
+      <form>
+        <div className="container">
+          <label htmlFor="name">
+            <b>Username</b>
+          </label>
+          <input
+            type="text"
+            placeholder="Enter Username"
+            name="name"
+            autoComplete="username"
+            onChange={this.addInputData}
+            required
+          />
 
-            <label htmlFor="password">
-              <b>Password</b>
-            </label>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              name="password"
-              onChange={this.addInputData}
-              required
-            />
-            <label>
-              <input type="checkbox" name="remember" /> Remember me
-            </label>
-            <ErrorMessages errorMessages={this.state.errorMessages} />
-            <button type="submit" onClick={this.logIn}>
-              Login
-            </button>
-          </div>
+          <label htmlFor="password">
+            <b>Password</b>
+          </label>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            name="password"
+            autoComplete="new-password"
+            onChange={this.addInputData}
+            required
+          />
+          <label>
+            <input type="checkbox" name="remember" /> Remember me
+          </label>
+          <ErrorMessages errorMessages={this.state.errorMessages} />
+          <button type="submit" onClick={this.logIn}>
+            Login
+          </button>
+        </div>
 
-          <div className="container">
-            <span className="psw">
-              Forgot <a href="/">password?</a>
-            </span>
-          </div>
-        </form>
-      </>
+        <div className="container">
+          <span className="psw">
+            Forgot <a href="/">password?</a>
+          </span>
+        </div>
+      </form>
     );
   }
 }
