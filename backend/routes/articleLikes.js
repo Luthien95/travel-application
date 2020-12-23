@@ -10,7 +10,17 @@ router.get("/", async function (req, res, next) {
     if (err) {
       res.send(err);
     } else {
-      res.json(result);
+      ArticleLike.findOne(
+        { articleId: req.query.articleId, userId: req.userId },
+        function (err, user) {
+          if (user) {
+            res.json({ numberOfLikes: result, ifUserLiked: true });
+            return;
+          } else {
+            res.json({ numberOfLikes: result, ifUserLiked: false });
+          }
+        }
+      );
     }
   });
 });

@@ -1,6 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { dateFormat } from "./dateFormat";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { farHeart } from "@fortawesome/free-solid-svg-icons";
 
 class ArticleShortcut extends React.Component {
   constructor(props) {
@@ -8,6 +11,7 @@ class ArticleShortcut extends React.Component {
 
     this.state = {
       likesCount: null,
+      ifUserLiked: null,
     };
 
     this.addLike = this.addLike.bind(this);
@@ -24,7 +28,8 @@ class ArticleShortcut extends React.Component {
 
     axios.get(`/api/likes?articleId=${place._id}`).then((response) => {
       this.setState({
-        likesCount: response.data,
+        likesCount: response.data.numberOfLikes,
+        ifUserLiked: response.data.ifUserLiked,
       });
     });
   }
@@ -71,10 +76,19 @@ class ArticleShortcut extends React.Component {
           />
         </div>
         <div className="article-shortcut__data">
-          <p>likes: {this.state.likesCount}</p>
-          <button onClick={this.addLike}>Add like</button>
-          <button onClick={this.removeLike}>Remove like</button>
           <p className="article-shortcut__city">{place.country}</p>
+          <p>likes: {this.state.likesCount}</p>
+          {this.state.ifUserLiked ? (
+            <button onClick={this.removeLike}>
+              <FontAwesomeIcon icon={faHeart} />
+              Remove like
+            </button>
+          ) : (
+            <button onClick={this.addLike}>
+              <FontAwesomeIcon icon={faHeart} />
+              Add like
+            </button>
+          )}
           <h1 className="article-shortcut__header">{place.title}</h1>
           <p className="article-shortcut__date">
             {dateFormat(place.startDate, place.endDate)}

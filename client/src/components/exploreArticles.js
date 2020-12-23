@@ -6,6 +6,7 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Article from "./article";
 import Loader from "./loader";
 import ArticleShortcut from "./articleShortcut";
+import Search from "./search";
 import axios from "axios";
 
 class ExploreArticles extends React.Component {
@@ -18,6 +19,7 @@ class ExploreArticles extends React.Component {
     };
 
     this.loadMoreItems = this.loadMoreItems.bind(this);
+    this.loadPostWithStringInTitle = this.loadPostWithStringInTitle.bind(this);
   }
 
   componentDidMount = () => {
@@ -37,12 +39,24 @@ class ExploreArticles extends React.Component {
     });
   }
 
+  loadPostWithStringInTitle(string) {
+    axios
+      .get(`/api/articles/searchInTitle?title=${string}`)
+      .then((response) => {
+        this.setState({
+          articleList: response.data,
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+
   render() {
     const { articleList, visibleItems } = this.state;
 
     if (articleList) {
       return (
         <>
+          <Search loadPostWithStringInTitle={this.loadPostWithStringInTitle} />
           <Container className="article-list">
             {articleList ? (
               <List
