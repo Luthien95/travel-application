@@ -24,6 +24,14 @@ router.get("/publicPosts", async (req, res) => {
   res.send(articles);
 });
 
+router.get("/publicPostsAscending", async (req, res) => {
+  const articles = await Article.find({ isPublic: true }).sort([
+    ["startDate", 1],
+  ]);
+
+  res.send(articles);
+});
+
 router.get("/searchInTitle", async (req, res) => {
   const articles = await Article.find({
     title: new RegExp(req.query.title, "i"),

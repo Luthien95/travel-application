@@ -20,17 +20,14 @@ class ExploreArticles extends React.Component {
 
     this.loadMoreItems = this.loadMoreItems.bind(this);
     this.loadPostWithStringInTitle = this.loadPostWithStringInTitle.bind(this);
+    this.loadPostWithDateDescending = this.loadPostWithDateDescending.bind(
+      this
+    );
+    this.loadPostWithDateAscending = this.loadPostWithDateAscending.bind(this);
   }
 
   componentDidMount = () => {
-    axios
-      .get("/api/articles/publicPosts")
-      .then((response) => {
-        this.setState({
-          articleList: response.data,
-        });
-      })
-      .catch((error) => console.log(error));
+    this.loadPostWithDateDescending();
   };
 
   loadMoreItems() {
@@ -50,13 +47,39 @@ class ExploreArticles extends React.Component {
       .catch((err) => console.log(err));
   }
 
+  loadPostWithDateDescending() {
+    axios
+      .get("/api/articles/publicPosts")
+      .then((response) => {
+        this.setState({
+          articleList: response.data,
+        });
+      })
+      .catch((error) => console.log(error));
+  }
+
+  loadPostWithDateAscending() {
+    axios
+      .get("/api/articles/publicPostsAscending")
+      .then((response) => {
+        this.setState({
+          articleList: response.data,
+        });
+      })
+      .catch((error) => console.log(error));
+  }
+
   render() {
     const { articleList, visibleItems } = this.state;
 
     if (articleList) {
       return (
         <>
-          <Search loadPostWithStringInTitle={this.loadPostWithStringInTitle} />
+          <Search
+            loadPostWithStringInTitle={this.loadPostWithStringInTitle}
+            loadPostWithDateAscending={this.loadPostWithDateAscending}
+            loadPostWithDateDescending={this.loadPostWithDateDescending}
+          />
           <Container className="article-list">
             {articleList ? (
               <List
